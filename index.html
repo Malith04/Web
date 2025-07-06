@@ -3,16 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Agri-Bot Dashboard</title>
+  <title>Agri-Bot </title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="loader-wrapper">
-      <div class="loader"></div>
-    </div>
+
   <header class="hero-section" id="header">
     <div class="overlay">
-      <h1>Agri-Bot Dashboard</h1>
+      <h1>Agri-Bot</h1>
       <p>Real-time smart farming control system</p>
     </div>
   </header>
@@ -23,81 +21,94 @@
       <li><a href="#soil">Soil Monitoring</a></li>
       <li><a href="#irrigation">Irrigation</a></li>
       <li><a href="#weather">Weather</a></li>
-      <li><a href="#camera">Camera</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="ContactUs.html">Contact Us</a></li>
+      <li><a href="#About Us">About Us</a></li>
+      <li><a href="#Contact Us">Contact Us</a></li>
+      <li><a href="#Settings">Settings</a></li>
     </ul>
   </nav>
 
   <main>
     <section class="card" id="soil">
-      <h2>🌱 Soil Moisture</h2>
+      <h2>Soil Moisture</h2>
       <div class="gauge-container">
-        <div class="gauge" id="moisture-gauge">
-          <div class="gauge-text">
-            <span id="moisture-value">--%</span>
-          </div>
-        </div>
+        <div class="gauge" id="moisture-gauge">--%</div>
       </div>
     </section>
 
     <section class="card" id="irrigation">
-      <h2>🚿 Water Pump</h2>
+      <h2>Water Pump</h2>
       <button id="toggle-pump">Toggle Pump</button>
       <p id="pump-status">Pump Status: Unknown</p>
     </section>
 
     <section class="card" id="weather">
-      <h2>☁️ Weather</h2>
-      <p>Temperature: <span id="temperature">--</span>°C</p>
-      <p>Humidity: <span id="humidity">--</span>%</p>
+      <h2>Weather</h2>
+      <p>Temperature: <span id="temperature">--</span> &#8451;</p>
+      <p>Humidity: <span id="humidity">--</span> %</p>
     </section>
 
     <section class="card" id="camera">
-      <h2>🎦 Live Camera Feed</h2>
-      <div class="camera-container">
-        <img src="http://<ESP32-CAM-IP>/stream" alt="Camera Stream" />
-      </div>
-    </section>
-
-    <section class="about-card" id="about">
-      <h2>👩‍💻 About Us</h2>
-      <p>We are a passionate team from NIBM dedicated to transforming traditional agriculture through real-time smart farming technologies. Agri-Bot is our capstone project for a sustainable future.</p>
-      <div class="team-members">
-        <div class="member">
-          <img src="assets/images/jayamal_aiya.jpg" alt="Member 1" />
-          <h4>Jayamal</h4>
-        </div>
-        <div class="member">
-          <img src="assets/images/pooki_akki.jpg" alt="Member 2" />
-          <h4>Poornima</h4>
-        </div>
-        <div class="member">
-          <img src="assets/images/mihiranga.jpg" alt="Member 3" />
-          <h4>Mihiranga</h4>
-        </div>
-        <div class="member">
-          <img src="assets/images/me.jpg" alt="Member 4" />
-          <h4>Malith</h4>
-        </div>
-      </div>
+      <h2>Live Camera Feed</h2>
+      <img src="http://<ESP32-CAM-IP>/stream" alt="Camera Stream" width="100%">
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Agri-Bot Team NIBM. All rights reserved.</p>
+    <p>&copy; 2025 Agri-Bot Team NIBM -. All rights reserved.</p>
   </footer>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-  <script src="script.js"></script>
   <script>
-      window.addEventListener("load", () => {
-        const loader = document.querySelector(".loader-wrapper");
-        loader.style.opacity = "0";
-        loader.style.transition = "opacity 2s ease";
-        setTimeout(() => loader.style.display = "none", 700);
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvvvs04KJ0M-OxbldlV78-yxOVJyhAnCE",
+      authDomain: "agri-bot-17548.firebaseapp.com",
+      databaseURL: "https://agri-bot-17548-default-rtdb.firebaseio.com",
+      projectId: "agri-bot-17548",
+      storageBucket: "agri-bot-17548.appspot.com",
+      messagingSenderId: "437600300267",
+      appId: "1:437600300267:web:67baad95b4416cdc2ce2ae"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const gauge = document.getElementById("moisture-gauge");
+    const pumpStatusDisplay = document.getElementById("pump-status");
+    const tempDisplay = document.getElementById("temperature");
+    const humidityDisplay = document.getElementById("humidity");
+
+    db.ref("/moisture").on("value", snapshot => {
+      const value = snapshot.val();
+      gauge.textContent = value + "%";
+      gauge.style.background = `conic-gradient(
+        #4caf50 0% ${value}%,
+        #ccc ${value}% 100%
+      )`;
+    });
+
+    db.ref("/pump").on("value", snapshot => {
+      const status = snapshot.val();
+      pumpStatusDisplay.textContent = "Pump Status: " + (status ? "ON" : "OFF");
+    });
+
+    db.ref("/weather").on("value", snapshot => {
+      const weather = snapshot.val();
+      tempDisplay.textContent = weather.temperature;
+      humidityDisplay.textContent = weather.humidity;
+    });
+
+    document.getElementById("toggle-pump").addEventListener("click", () => {
+      db.ref("/pump").once("value").then(snapshot => {
+        const current = snapshot.val();
+        db.ref("/pump").set(!current);
       });
+    });
+
+    window.addEventListener("scroll", () => {
+      const header = document.getElementById("header");
+      header.classList.toggle("shrink", window.scrollY > 100);
+    });
   </script>
 </body>
 </html>

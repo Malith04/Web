@@ -34,29 +34,33 @@ body {
 .container {
   display: flex;
   justify-content: space-between;
-  padding: 50px;
   align-items: flex-start;
+  padding: 40px 60px;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .wrapper {
-  width: 50%;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  padding: 50px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 30px rgba(0, 255, 128, 0.2);
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  padding: 40px 20px;
+  margin: 0 auto 20px;
+  background: transparent;
+  box-shadow: none;
 }
 
+
 #heading2 {
-  font-size: 46px;
-  color: #00ffcc;
-  margin-bottom: 20px;
+  font-size: 48px;
+  font-weight: 600;
+  color: #00ffc8;
+  margin-bottom: 10px;
 }
 
 #heading3 {
   font-size: 16px;
+  font-weight: 400;
   color: #ffffff;
 }
 
