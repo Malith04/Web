@@ -7,35 +7,53 @@
   <link rel="stylesheet" href="contact.css" />
 </head>
 <body>
-     <div class="loader-wrapper">
-      <div class="loader"></div>
-    </div>
-  <div class="contact-container">
-    <h1>Contact Us</h1>
-    <p>We'd love to hear from you! Please reach out with questions, suggestions, or feedback about our Agricultural Robot project.</p>
-    
-    <form action="https://formspree.io/f/your-form-id" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+  <div class="loader-wrapper">
+    <div class="loader"></div>
+  </div>
 
-    <div class="team-info">
-      <h3>Agri-Bot</h3>
-      <p>🌿 Group No - 05</p>
-      <p>📧 Email: ajnarampanawa@gmail.com</p>
-      <p>📍 School of Computing - Group Project</p>
+  <div class="container">
+    <div class="wrapper">
+      <h2 id="heading2">Contact Us</h2>
+      <p id="heading3">
+        Thank you for using the Agri-Bot Smart Farming System.<br>
+        For inquiries, support, or feedback, feel free to reach out to us:
+      </p>
+    </div>
+
+    <div class="wrapper-contactForm animated">
+      <form>
+        <h2>Send Message</h2>
+        <div class="inputBox">
+          <input type="text" required>
+          <span>Full Name</span>
+        </div><br>
+        
+        <div class="inputBox">
+          <input type="text" required>
+          <span>Email</span>
+        </div>
+        <div class="inputBox">
+          <input type="number" required>
+          <span>Phone Number</span>
+        </div>
+        <div class="inputBox">
+          <textarea required></textarea>
+          <span>Your Message...</span>
+        </div>
+        <div class="inputBox">
+          <input type="submit" value="Send">
+        </div>
+      </form>
     </div>
   </div>
 
   <script>
-      window.addEventListener("load", () => {
-        const loader = document.querySelector(".loader-wrapper");
-        loader.style.opacity = "0";
-        loader.style.transition = "opacity 2s ease";
-        setTimeout(() => loader.style.display = "none", 700);
-      });
+    window.addEventListener("load", () => {
+      const loader = document.querySelector(".loader-wrapper");
+      loader.style.opacity = "0";
+      loader.style.transition = "opacity 2s ease";
+      setTimeout(() => loader.style.display = "none", 700);
+    });
   </script>
 </body>
 </html>
